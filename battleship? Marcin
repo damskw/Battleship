@@ -1,3 +1,6 @@
+#taka logika gry co wy na to oczywiście możemy to dopracować podziałać z tym wynieść to na lepszy lewel to moja jakaś propozycja 
+
+
 from ast import Pass
 import random
 import time
