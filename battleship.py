@@ -1,8 +1,9 @@
 from distutils.command import check
 from board import create_board, display_board, display_two_boards
 from coordinates import get_all_ships, get_player_coordinates, place_a_ship
-from functions import get_max_ships
+from functions import check_if_has_ships, get_max_ships, show_miss_message, show_retake_message, show_sunk_message, take_a_shot
 from menu import check_play_again, clear, get_board_size, get_menu_option, goodbye, show_logo, show_shooting_phase_message, show_waiting_screen, show_winning_message
+from clint.textui import colored
 
 
 HUMAN_VS_HUMAN = 1
@@ -12,6 +13,9 @@ AI_VS_HUMAN = 2
 filenames = ["logo.txt"]
 
 def main():
+  sunk = "sunk"
+  miss = "miss"
+  retake = "retake"
   player_one_ships = 0
   player_two_ships = 0
   current_player = "Player one"
@@ -42,66 +46,42 @@ def main():
         clear()
         display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
         row, column = get_player_coordinates(player_one)
-        if player_two_hidden_board[row][column] == "X" and player_two_visible_board[row][column] == "0":
-          player_two_visible_board[row][column] = "S"
-          player_two_ships -= 1
+        action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships)
+        if action == sunk:
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
-          if player_two_ships > 0:
-            input("It's a hit, ship is sunk. ")
+          show_sunk_message()
+          still_has_ships = check_if_has_ships(player_two_ships)
+          if still_has_ships:
             current_player = player_two
           else:
-            is_game_running = False
-            show_winning_message(player_one)
-            decision = check_play_again()
-            if decision.lower() == "y":
-              clear()
-              main()
-            else:
-              goodbye()
-        elif player_two_hidden_board[row][column] == "0":
-          player_two_visible_board[row][column] = "M"
-          clear()
-          display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
-          input("You\'ve missed. ")
+            show_winning_message(current_player)
+        elif action == miss:
+          show_miss_message()
           current_player = player_two
-        elif player_two_visible_board[row][column] == "S" or "H" or "M":
-          clear()
-          display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
-          input("You've already guessed that spot, try again! ")
+        elif action == retake:
+          show_retake_message()
           current_player = player_one
 
       while current_player == player_two:
         clear()
         display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
         row, column = get_player_coordinates(player_two)
-        if player_one_hidden_board[row][column] == "X" and player_one_visible_board[row][column] == "0":
-          player_one_visible_board[row][column] = "S"
-          player_one_ships -= 1
+        action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships)
+        if action == sunk:
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
-          if player_one_ships > 0:
-            input("It's a hit, ship is sunk. ")
+          show_sunk_message()
+          still_has_ships = check_if_has_ships(player_one_ships)
+          if still_has_ships:
             current_player = player_one
           else:
-            is_game_running = False
-            show_winning_message(player_two)
-            decision = check_play_again()
-            if decision.lower() == "y":
-              clear()
-              main()
-            else:
-              goodbye()
-        elif player_one_hidden_board[row][column] == "0":
-          player_one_visible_board[row][column] = "M"
-          clear()
-          display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
-          input("You\'ve missed. ")
+            show_winning_message(current_player)
+        elif action == miss:
+          show_miss_message()
           current_player = player_one
-        elif player_one_visible_board[row][column] == "S" or "H" or "M":
-          clear()
-          display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
-          input("You've already guessed that spot, try again! ")
+        elif action == retake:
+          show_retake_message()
           current_player = player_two
 
       
