@@ -12,6 +12,18 @@ AI_VS_HUMAN = 2
 
 filenames = ["logo.txt"]
 
+def check_play_again():
+  while True:
+    decision = input("Would you like to play again? (y/n) ")
+    if decision.lower() == "y":
+      clear()
+      main()
+      break
+    elif decision.lower() == "n":
+      goodbye()
+    else:
+      continue
+
 def main():
   sunk = "sunk"
   miss = "miss"
@@ -44,7 +56,7 @@ def main():
     while is_game_running:
       while current_player == player_one:
         update_screen(player_one_visible_board, player_two_visible_board, board_size)
-        row, column = get_player_coordinates(player_one)
+        row, column = get_player_coordinates(player_one, board_size)
         action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships)
         if action == sunk:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
@@ -54,7 +66,7 @@ def main():
             current_player = change_player(player_two)
           else:
             show_winning_message(current_player)
-            exit()
+            check_play_again()
         elif action == miss:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_miss_message()
@@ -66,7 +78,7 @@ def main():
 
       while current_player == player_two:
         update_screen(player_one_visible_board, player_two_visible_board, board_size)
-        row, column = get_player_coordinates(player_two)
+        row, column = get_player_coordinates(player_two, board_size)
         action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships)
         if action == sunk:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
@@ -76,7 +88,7 @@ def main():
             current_player = change_player(player_one)
           else:
             show_winning_message(current_player)
-            exit()
+            check_play_again()
         elif action == miss:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_miss_message()

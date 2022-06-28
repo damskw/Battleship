@@ -46,5 +46,3 @@ def place_a_ship(board, row, column):
 
     return board
 
-def end_game():
-  return None
