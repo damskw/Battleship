@@ -1,7 +1,7 @@
 from distutils.command import check
 from board import create_board, display_board, display_two_boards
 from coordinates import get_all_ships, get_player_coordinates, place_a_ship
-from functions import check_if_has_ships, get_max_ships, show_miss_message, show_retake_message, show_sunk_message, take_a_shot, update_screen
+from functions import check_if_has_ships, get_max_ships, change_player, show_miss_message, show_retake_message, show_sunk_message, take_a_shot, update_screen
 from menu import check_play_again, clear, get_board_size, get_menu_option, goodbye, show_logo, show_shooting_phase_message, show_waiting_screen, show_winning_message
 from clint.textui import colored
 
@@ -51,15 +51,15 @@ def main():
           show_sunk_message()
           still_has_ships = check_if_has_ships(player_two_ships)
           if still_has_ships:
-            current_player = player_two
+            current_player = change_player(player_two)
           else:
             show_winning_message(current_player)
         elif action == miss:
           show_miss_message()
-          current_player = player_two
+          current_player = change_player(player_two)
         elif action == retake:
           show_retake_message()
-          current_player = player_one
+          current_player = change_player(player_one)
 
       while current_player == player_two:
         update_screen(player_one_visible_board, player_two_visible_board, board_size)
@@ -70,15 +70,15 @@ def main():
           show_sunk_message()
           still_has_ships = check_if_has_ships(player_one_ships)
           if still_has_ships:
-            current_player = player_one
+            current_player = change_player(player_one)
           else:
             show_winning_message(current_player)
         elif action == miss:
           show_miss_message()
-          current_player = player_one
+          current_player = change_player(player_one)
         elif action == retake:
           show_retake_message()
-          current_player = player_two
+          current_player = change_player(player_two)
 
       
 

@@ -42,3 +42,7 @@ def update_screen(player_one_visible_board, player_two_visible_board, board_size
     clear()
     display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
 
+def change_player(player):
+    next_player = player
+    return next_player
+
