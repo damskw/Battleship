@@ -29,3 +29,6 @@ def place_a_ship(board, row, column):
     board[row][column] = "X"
 
     return board
+
+def end_game():
+  return None

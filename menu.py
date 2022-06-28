@@ -61,7 +61,7 @@ def show_shooting_phase_message():
   clear()
 
 def show_winning_message(player):
-  print(f"{player} has won. ")
+  input(f"{player} has won. ")
 
 def check_play_again():
   decision = input("Would you like to play again? ")

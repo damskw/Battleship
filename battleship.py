@@ -54,10 +54,13 @@ def main():
             current_player = change_player(player_two)
           else:
             show_winning_message(current_player)
+            exit()
         elif action == miss:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_miss_message()
           current_player = change_player(player_two)
         elif action == retake:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_retake_message()
           current_player = change_player(player_one)
 
@@ -73,10 +76,13 @@ def main():
             current_player = change_player(player_one)
           else:
             show_winning_message(current_player)
+            exit()
         elif action == miss:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_miss_message()
           current_player = change_player(player_one)
         elif action == retake:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_retake_message()
           current_player = change_player(player_two)
 
