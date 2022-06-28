@@ -59,3 +59,10 @@ def show_waiting_screen(player_one, player_two):
 def show_shooting_phase_message():
   input(colored.red("\t\tTime for shooting phase!\n Please press Enter to continue. "))
   clear()
+
+def show_winning_message(player):
+  print(f"{player} has won. ")
+
+def check_play_again():
+  decision = input("Would you like to play again? ")
+  return decision
