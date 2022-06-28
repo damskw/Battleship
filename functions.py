@@ -1,4 +1,7 @@
 from clint.textui import colored
+from board import display_two_boards
+
+from menu import clear
 
 def get_max_ships(board_size):
     max_ships = (board_size // 2) + 1
@@ -34,4 +37,8 @@ def show_retake_message():
 
 def show_sunk_message():
     input(colored.red("It's a hit, you've sunken enemy's battleship! "))
+
+def update_screen(player_one_visible_board, player_two_visible_board, board_size):
+    clear()
+    display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
 
