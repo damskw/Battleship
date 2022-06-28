@@ -46,3 +46,7 @@ def change_player(player):
     next_player = player
     return next_player
 
+def get_player_name():
+  player_one = input("Enter your nickname: ")
+  player_two = input("Enter your nickname: ")
+  return player_one, player_two
