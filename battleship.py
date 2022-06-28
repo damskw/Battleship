@@ -65,7 +65,7 @@ def main():
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           input("You\'ve missed. ")
           current_player = player_two
-        elif player_two_visible_board[row][column] == "S" or "H":
+        elif player_two_visible_board[row][column] == "S" or "H" or "M":
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           input("You've already guessed that spot, try again! ")
@@ -98,7 +98,7 @@ def main():
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           input("You\'ve missed. ")
           current_player = player_one
-        elif player_one_visible_board[row][column] == "S" or "H":
+        elif player_one_visible_board[row][column] == "S" or "H" or "M":
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           input("You've already guessed that spot, try again! ")
