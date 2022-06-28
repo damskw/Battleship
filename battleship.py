@@ -42,13 +42,14 @@ def main():
         clear()
         display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
         row, column = get_player_coordinates(player_one)
-        if player_two_hidden_board[row][column] == "X":
+        if player_two_hidden_board[row][column] == "X" and player_two_visible_board[row][column] == "0":
           player_two_visible_board[row][column] = "S"
           player_two_ships -= 1
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           if player_two_ships > 0:
             input("It's a hit, ship is sunk. ")
+            current_player = player_two
           else:
             is_game_running = False
             show_winning_message(player_one)
@@ -58,24 +59,30 @@ def main():
               main()
             else:
               goodbye()
-        else:
+        elif player_two_hidden_board[row][column] == "0":
           player_two_visible_board[row][column] = "M"
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           input("You\'ve missed. ")
-        current_player = player_two
+          current_player = player_two
+        elif player_two_visible_board[row][column] == "S" or "H":
+          clear()
+          display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
+          input("You've already guessed that spot, try again! ")
+          current_player = player_one
 
       while current_player == player_two:
         clear()
         display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
         row, column = get_player_coordinates(player_two)
-        if player_one_hidden_board[row][column] == "X":
+        if player_one_hidden_board[row][column] == "X" and player_one_visible_board[row][column] == "0":
           player_one_visible_board[row][column] = "S"
           player_one_ships -= 1
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           if player_one_ships > 0:
             input("It's a hit, ship is sunk. ")
+            current_player = player_one
           else:
             is_game_running = False
             show_winning_message(player_two)
@@ -85,12 +92,17 @@ def main():
               main()
             else:
               goodbye()
-        else:
+        elif player_one_hidden_board[row][column] == "0":
           player_one_visible_board[row][column] = "M"
           clear()
           display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
           input("You\'ve missed. ")
-        current_player = player_one
+          current_player = player_one
+        elif player_one_visible_board[row][column] == "S" or "H":
+          clear()
+          display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
+          input("You've already guessed that spot, try again! ")
+          current_player = player_two
 
       
 
