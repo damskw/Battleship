@@ -57,17 +57,17 @@ def get_all_ships(player_board, board_size, player_ships, max_ships, player):
 
 def place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships, amount_of_double_ships):
   double_ship_coordinates_counter = 0
-  every_step = amount_of_double_ships // 2
+  step_counter = 0
   while double_ship_coordinates_counter != number_of_coordinates_for_double_ships:
-    if every_step == 0:
+    if step_counter == 0:
       used_coordinates = []
       row, column = get_player_coordinates(player, board_size)
       place_a_ship(player_board, row, column)
       used_coordinates.append(row)
       used_coordinates.append(column)
       double_ship_coordinates_counter += 1
-      every_step += 1
-    if every_step == 1:
+      step_counter += 1
+    if step_counter == 1:
       clear()
       display_board(player_board, board_size)
       row, column = get_player_coordinates(player, board_size)
@@ -75,6 +75,7 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
       if valid_coordinates:
         place_a_ship(player_board, row, column)
         double_ship_coordinates_counter += 1
+        step_counter += 1
       else:
         input(colored.red("\t Wrong coordinates, try again. "))
     clear()
