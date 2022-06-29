@@ -29,15 +29,22 @@ def get_player_coordinates(player, board_size):
         continue
     return row, column
 
-def get_all_ships(players_board, board_size, player_ships, max_ships, player):
-  display_board(players_board, board_size)
-  row, column = get_player_coordinates(player, board_size)
-  place_a_ship(players_board, row, column)
-  player_ships += 1
-  display_board(players_board, board_size)
+def get_all_ships(player_board, board_size, player_ships, max_ships, player):
+  display_board(player_board, board_size)
+  while True:
+    row, column = get_player_coordinates(player, board_size)
+    no_adjacent = check_adjacent_spots(row, column, player_board)
+    if no_adjacent:
+      place_a_ship(player_board, row, column)
+      player_ships += 1
+      break
+    else:
+      print(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
+      continue
+  display_board(player_board, board_size)
   clear()
   if player_ships == max_ships:
-    display_board(players_board, board_size)
+    display_board(player_board, board_size)
     input("You've completed your placement. Please acknowledge. ")
   return player_ships
 
@@ -46,3 +53,13 @@ def place_a_ship(board, row, column):
 
     return board
 
+def check_adjacent_spots(row, column, player_board):
+  if player_board[row -1][column] == "X":
+    return False
+  elif player_board[row][column + 1] == "X":
+    return False
+  elif player_board[row][column - 1] == "X":
+    return False
+  elif player_board[row + 1][column] == "X":
+    return False
+  return True
