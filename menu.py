@@ -3,6 +3,8 @@ import os
 import sys
 from clint.textui import colored
 
+filenames = ["logo.txt"]
+
 def ask_for_any_key():
   os.system('pause')
 
@@ -31,6 +33,7 @@ def get_menu_option():
                     "2. AI vs Human\n")
   while selected_option not in available_options:
     clear()
+    show_logo(filenames)
     selected_option = input("Please choose one of the following options:\n"
                     "1. Human vs Human\n"
                     "2. AI vs Human\n" + 

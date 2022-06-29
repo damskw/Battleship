@@ -1,6 +1,5 @@
 from clint.textui import colored
 from board import display_two_boards
-from coordinates import check_adjacent_spots
 
 from menu import clear
 
@@ -48,6 +47,18 @@ def show_sunk_message():
 def show_hit_message():
     input(colored.red("You've hit enemy's battleship but it's still standing! "))
 
+def show_coordinates_are_taken_message():
+    input(colored.red("\t Error: Coordinates are already taken. "))
+
+def show_invalid_coordinates_message():
+    input(colored.red("\t Wrong coordinates, try again. "))
+
+def show_are_adjacent_error_message():
+    input(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
+
+def show_completed_placement_message():
+    input("You've completed your placement. Please acknowledge. ")
+
 def update_screen(player_one_visible_board, player_two_visible_board, board_size):
     clear()
     display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
@@ -60,3 +71,44 @@ def get_player_name():
   player_one = input("Enter your nickname: ")
   player_two = input("Enter your nickname: ")
   return player_one, player_two
+
+def check_adjacent_spots(row, column, player_board, board_size):
+  player_input = [row, column]
+  last_spot = board_size - 1
+  upper_left_corner = [0, 0]
+  upper_right_corner = [0, last_spot]
+  bottom_left_corner = [last_spot, 0]
+  bottom_right_corner = [last_spot, last_spot]
+  first_row = [0, column]
+  first_column = [row, 0]
+  last_row = [last_spot, column]
+  last_column = [row, last_spot]
+
+  if player_input == upper_left_corner:
+    if player_board[row][column + 1] == "X" or player_board[row + 1][column] == "X":
+      return False
+  elif player_input == upper_right_corner:
+    if player_board[row][column - 1] == "X" or player_board[row + 1][column] == "X":
+      return False
+  elif player_input == bottom_left_corner:
+    if player_board[row - 1][column] == "X" or player_board[row][column + 1] == "X":
+      return False
+  elif player_input == bottom_right_corner:
+    if player_board[row - 1][column] == "X" or player_board[row][column - 1] == "X":
+      return False
+  elif player_input == first_row:
+    if player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
+      return False
+  elif player_input == first_column:
+    if player_board[row][column + 1] == "X" or player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X":
+      return False
+  elif player_input == last_row:
+    if player_board[row][column - 1] == "X" or player_board[row - 1][column] == "X" or player_board[row][column + 1] == "X":
+      return False
+  elif player_input == last_column:
+    if player_board[row][column - 1] == "X" or player_board[row + 1][column] == "X" or player_board[row - 1][column] == "X":
+      return False
+  else:
+    if player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X" or player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
+      return False
+  return True

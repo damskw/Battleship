@@ -1,5 +1,6 @@
 from turtle import right
 from board import display_board
+from functions import check_adjacent_spots, show_are_adjacent_error_message, show_completed_placement_message, show_coordinates_are_taken_message, show_invalid_coordinates_message
 from menu import clear
 from clint.textui import colored
 
@@ -50,14 +51,14 @@ def get_all_ships(player_board, board_size, player_ships, max_ships, player):
         player_ships += 1
         single_ship_counter += 1
       else:
-        input(colored.red("\t Error: Coordinates are already taken. "))
+        show_coordinates_are_taken_message()
     else:
-      input(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
+      show_are_adjacent_error_message()
   display_board(player_board, board_size)
   clear()
   if player_ships >= max_ships:
     display_board(player_board, board_size)
-    input("You've completed your placement. Please acknowledge. ")
+    show_completed_placement_message()
   return player_ships
 
 def place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships, amount_of_double_ships):
@@ -75,7 +76,7 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
         double_ship_coordinates_counter += 1
         step_counter += 1
       else:
-        input(colored.red("\t Error: Coordinates are already taken. "))
+        show_coordinates_are_taken_message()
     if step_counter == 1:
       clear()
       display_board(player_board, board_size)
@@ -88,9 +89,9 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
           double_ship_coordinates_counter += 1
           step_counter += 1
         else: 
-          input(colored.red("\t Error: Coordinates are already taken. "))
+          show_coordinates_are_taken_message()
       else:
-        input(colored.red("\t Wrong coordinates, try again. "))
+        show_invalid_coordinates_message()
     clear()
     display_board(player_board, board_size)
 
@@ -106,48 +107,6 @@ def check_long_ship_next_coordinates(used_coordinates, row, column):
   max_column = old_column + 1
   if row > max_row or column > max_column:
     return False
-  return True
-
-
-def check_adjacent_spots(row, column, player_board, board_size):
-  player_input = [row, column]
-  last_spot = board_size - 1
-  upper_left_corner = [0, 0]
-  upper_right_corner = [0, last_spot]
-  bottom_left_corner = [last_spot, 0]
-  bottom_right_corner = [last_spot, last_spot]
-  first_row = [0, column]
-  first_column = [row, 0]
-  last_row = [last_spot, column]
-  last_column = [row, last_spot]
-
-  if player_input == upper_left_corner:
-    if player_board[row][column + 1] == "X" or player_board[row + 1][column] == "X":
-      return False
-  elif player_input == upper_right_corner:
-    if player_board[row][column - 1] == "X" or player_board[row + 1][column] == "X":
-      return False
-  elif player_input == bottom_left_corner:
-    if player_board[row - 1][column] == "X" or player_board[row][column + 1] == "X":
-      return False
-  elif player_input == bottom_right_corner:
-    if player_board[row - 1][column] == "X" or player_board[row][column - 1] == "X":
-      return False
-  elif player_input == first_row:
-    if player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
-      return False
-  elif player_input == first_column:
-    if player_board[row][column + 1] == "X" or player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X":
-      return False
-  elif player_input == last_row:
-    if player_board[row][column - 1] == "X" or player_board[row - 1][column] == "X" or player_board[row][column + 1] == "X":
-      return False
-  elif player_input == last_column:
-    if player_board[row][column - 1] == "X" or player_board[row + 1][column] == "X" or player_board[row - 1][column] == "X":
-      return False
-  else:
-    if player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X" or player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
-      return False
   return True
 
 def get_amount_of_double_ships(board_size):
