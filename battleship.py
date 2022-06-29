@@ -25,6 +25,12 @@ def check_play_again():
       continue
 
 def main():
+  show_logo(filenames)
+  game_mode = get_menu_option()
+  clear()
+  board_size = get_board_size()
+  max_ships = get_max_ships(board_size)
+  clear()
   sunk = "sunk"
   miss = "miss"
   retake = "retake"
@@ -35,12 +41,6 @@ def main():
   player_one = "Player one"
   player_two = "Player two"
   is_game_running = True
-  show_logo(filenames)
-  game_mode = get_menu_option()
-  clear()
-  board_size = get_board_size()
-  max_ships = get_max_ships(board_size)
-  clear()
   if game_mode == HUMAN_VS_HUMAN:
     player_one_hidden_board = create_board(board_size)
     player_two_hidden_board = create_board(board_size)
