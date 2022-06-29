@@ -58,7 +58,7 @@ def main():
       while current_player == player_one:
         update_screen(player_one_visible_board, player_two_visible_board, board_size)
         row, column = get_player_coordinates(player_one, board_size)
-        action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships)
+        action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships, board_size)
         if action == sunk:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_sunk_message()
@@ -84,7 +84,7 @@ def main():
       while current_player == player_two:
         update_screen(player_one_visible_board, player_two_visible_board, board_size)
         row, column = get_player_coordinates(player_two, board_size)
-        action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships)
+        action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships, board_size)
         if action == sunk:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_sunk_message()

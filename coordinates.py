@@ -1,3 +1,4 @@
+from turtle import right
 from board import display_board
 from menu import clear
 from clint.textui import colored
@@ -41,11 +42,15 @@ def get_all_ships(player_board, board_size, player_ships, max_ships, player):
     clear()
     display_board(player_board, board_size)
     row, column = get_player_coordinates(player, board_size)
-    no_adjacent = check_adjacent_spots(row, column, player_board)
+    no_adjacent = check_adjacent_spots(row, column, player_board, board_size)
     if no_adjacent:
-      place_a_ship(player_board, row, column)
-      player_ships += 1
-      single_ship_counter += 1
+      are_coordinates_taken = check_if_coordinates_are_taken(player_board, row, column)
+      if not are_coordinates_taken:
+        place_a_ship(player_board, row, column)
+        player_ships += 1
+        single_ship_counter += 1
+      else:
+        input(colored.red("\t Error: Coordinates are already taken. "))
     else:
       input(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
   display_board(player_board, board_size)
@@ -62,20 +67,28 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
     if step_counter == 0:
       used_coordinates = []
       row, column = get_player_coordinates(player, board_size)
-      place_a_ship(player_board, row, column)
-      used_coordinates.append(row)
-      used_coordinates.append(column)
-      double_ship_coordinates_counter += 1
-      step_counter += 1
+      are_coordinates_taken = check_if_coordinates_are_taken(player_board, row, column)
+      if not are_coordinates_taken:
+        place_a_ship(player_board, row, column)
+        used_coordinates.append(row)
+        used_coordinates.append(column)
+        double_ship_coordinates_counter += 1
+        step_counter += 1
+      else:
+        input(colored.red("\t Error: Coordinates are already taken. "))
     if step_counter == 1:
       clear()
       display_board(player_board, board_size)
       row, column = get_player_coordinates(player, board_size)
       valid_coordinates = check_long_ship_next_coordinates(used_coordinates, row, column)
       if valid_coordinates:
-        place_a_ship(player_board, row, column)
-        double_ship_coordinates_counter += 1
-        step_counter += 1
+        are_coordinates_taken = check_if_coordinates_are_taken(player_board, row, column)
+        if not are_coordinates_taken:
+          place_a_ship(player_board, row, column)
+          double_ship_coordinates_counter += 1
+          step_counter += 1
+        else: 
+          input(colored.red("\t Error: Coordinates are already taken. "))
       else:
         input(colored.red("\t Wrong coordinates, try again. "))
     clear()
@@ -96,15 +109,45 @@ def check_long_ship_next_coordinates(used_coordinates, row, column):
   return True
 
 
-def check_adjacent_spots(row, column, player_board):
-  if player_board[row -1][column] == "X":
-    return False
-  elif player_board[row][column + 1] == "X":
-    return False
-  elif player_board[row][column - 1] == "X":
-    return False
-  elif player_board[row + 1][column] == "X":
-    return False
+def check_adjacent_spots(row, column, player_board, board_size):
+  player_input = [row, column]
+  last_spot = board_size - 1
+  upper_left_corner = [0, 0]
+  upper_right_corner = [0, last_spot]
+  bottom_left_corner = [last_spot, 0]
+  bottom_right_corner = [last_spot, last_spot]
+  first_row = [0, column]
+  first_column = [row, 0]
+  last_row = [last_spot, column]
+  last_column = [row, last_spot]
+
+  if player_input == upper_left_corner:
+    if player_board[row][column + 1] == "X" or player_board[row + 1][column] == "X":
+      return False
+  elif player_input == upper_right_corner:
+    if player_board[row][column - 1] == "X" or player_board[row + 1][column] == "X":
+      return False
+  elif player_input == bottom_left_corner:
+    if player_board[row - 1][column] == "X" or player_board[row][column + 1] == "X":
+      return False
+  elif player_input == bottom_right_corner:
+    if player_board[row - 1][column] == "X" or player_board[row][column - 1] == "X":
+      return False
+  elif player_input == first_row:
+    if player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
+      return False
+  elif player_input == first_column:
+    if player_board[row][column + 1] == "X" or player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X":
+      return False
+  elif player_input == last_row:
+    if player_board[row][column - 1] == "X" or player_board[row - 1][column] == "X" or player_board[row][column + 1] == "X":
+      return False
+  elif player_input == last_column:
+    if player_board[row][column - 1] == "X" or player_board[row + 1][column] == "X" or player_board[row - 1][column] == "X":
+      return False
+  else:
+    if player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X" or player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
+      return False
   return True
 
 def get_amount_of_double_ships(board_size):
@@ -114,3 +157,8 @@ def get_amount_of_double_ships(board_size):
 def get_amount_of_single_ships(board_size):
   amount_of_single_ships = board_size // 2
   return amount_of_single_ships
+
+def check_if_coordinates_are_taken(player_board, row, column):
+  if player_board[row][column] == "X":
+    return True
+  return False

@@ -8,12 +8,12 @@ def get_max_ships(board_size):
     max_ships = (board_size // 2) + 1
     return max_ships
 
-def take_a_shot(row, column, opponent_hidden_board, opponent_visible_board, opponent_player_ships):
+def take_a_shot(row, column, opponent_hidden_board, opponent_visible_board, opponent_player_ships, board_size):
     sunk = "sunk"
     miss = "miss"
     retake = "retake"
     hit = "hit"
-    no_adjacent = check_adjacent_spots(row, column, opponent_hidden_board)
+    no_adjacent = check_adjacent_spots(row, column, opponent_hidden_board, board_size)
     if opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and no_adjacent:
         opponent_visible_board[row][column] = "S"
         opponent_player_ships -= 1
