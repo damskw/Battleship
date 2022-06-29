@@ -1,5 +1,6 @@
 from clint.textui import colored
 from board import display_two_boards
+from coordinates import check_adjacent_spots
 
 from menu import clear
 
@@ -11,10 +12,16 @@ def take_a_shot(row, column, opponent_hidden_board, opponent_visible_board, oppo
     sunk = "sunk"
     miss = "miss"
     retake = "retake"
-    if opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0":
+    hit = "hit"
+    no_adjacent = check_adjacent_spots(row, column, opponent_hidden_board)
+    if opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and no_adjacent:
         opponent_visible_board[row][column] = "S"
         opponent_player_ships -= 1
         action = sunk
+    elif opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and not no_adjacent:
+        opponent_visible_board[row][column] = "H"
+        opponent_player_ships -= 1
+        action = hit
     elif opponent_hidden_board[row][column] == "0":
         opponent_visible_board[row][column] = "M"
         action = miss
@@ -37,6 +44,9 @@ def show_retake_message():
 
 def show_sunk_message():
     input(colored.red("It's a hit, you've sunken enemy's battleship! "))
+
+def show_hit_message():
+    input(colored.red("You've hit enemy's battleship but it's still standing! "))
 
 def update_screen(player_one_visible_board, player_two_visible_board, board_size):
     clear()

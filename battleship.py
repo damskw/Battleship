@@ -1,7 +1,7 @@
 from distutils.command import check
 from board import create_board, display_board, display_two_boards
 from coordinates import get_all_ships, get_player_coordinates, place_a_ship
-from functions import check_if_has_ships, get_max_ships, change_player, show_miss_message, show_retake_message, show_sunk_message, take_a_shot, update_screen
+from functions import check_if_has_ships, get_max_ships, change_player, show_hit_message, show_miss_message, show_retake_message, show_sunk_message, take_a_shot, update_screen
 from menu import check_play_again, clear, get_board_size, get_menu_option, goodbye, show_logo, show_shooting_phase_message, show_waiting_screen, show_winning_message
 from clint.textui import colored
 
@@ -28,6 +28,7 @@ def main():
   sunk = "sunk"
   miss = "miss"
   retake = "retake"
+  hit = "hit"
   player_one_ships = 0
   player_two_ships = 0
   current_player = "Player one"
@@ -67,6 +68,10 @@ def main():
           else:
             show_winning_message(current_player)
             check_play_again()
+        elif action == hit:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size)
+          show_hit_message()
+          current_player = change_player(player_two)
         elif action == miss:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_miss_message()
@@ -89,6 +94,10 @@ def main():
           else:
             show_winning_message(current_player)
             check_play_again()
+        elif action == hit:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size)
+          show_hit_message()
+          current_player = change_player(player_two)
         elif action == miss:
           update_screen(player_one_visible_board, player_two_visible_board, board_size)
           show_miss_message()

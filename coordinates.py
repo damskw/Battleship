@@ -31,22 +31,36 @@ def get_player_coordinates(player, board_size):
 
 def get_all_ships(player_board, board_size, player_ships, max_ships, player):
   display_board(player_board, board_size)
-  while True:
+  amount_of_double_ships = get_amount_of_double_ships(board_size)
+  number_of_coordinates_for_double_ships = amount_of_double_ships * 2
+  amount_of_single_ships = get_amount_of_single_ships(board_size)
+  single_ship_counter = 0
+  place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships)
+  player_ships += amount_of_double_ships
+  while single_ship_counter != amount_of_single_ships:
+    clear()
+    display_board(player_board, board_size)
     row, column = get_player_coordinates(player, board_size)
     no_adjacent = check_adjacent_spots(row, column, player_board)
     if no_adjacent:
       place_a_ship(player_board, row, column)
       player_ships += 1
-      break
+      single_ship_counter += 1
     else:
-      print(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
-      continue
+      input(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
   display_board(player_board, board_size)
   clear()
-  if player_ships == max_ships:
+  if player_ships >= max_ships:
     display_board(player_board, board_size)
     input("You've completed your placement. Please acknowledge. ")
   return player_ships
+
+def place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships):
+    for input_number in range(number_of_coordinates_for_double_ships):
+      row, column = get_player_coordinates(player, board_size)
+      place_a_ship(player_board, row, column)
+      clear()
+      display_board(player_board, board_size)
 
 def place_a_ship(board, row, column):
     board[row][column] = "X"
@@ -63,3 +77,11 @@ def check_adjacent_spots(row, column, player_board):
   elif player_board[row + 1][column] == "X":
     return False
   return True
+
+def get_amount_of_double_ships(board_size):
+  amount_of_double_ships = board_size // 3
+  return amount_of_double_ships
+
+def get_amount_of_single_ships(board_size):
+  amount_of_single_ships = board_size // 2
+  return amount_of_single_ships
