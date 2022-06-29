@@ -54,7 +54,7 @@ def show_invalid_coordinates_message():
     input(colored.red("\t Wrong coordinates, try again. "))
 
 def show_are_adjacent_error_message():
-    input(colored.red("\t Error: Ship cannot be adjacanet. Corners only available. "))
+    input(colored.red("\t Error: Ship cannot be adjacent. Corners only available. "))
 
 def show_completed_placement_message():
     input("You've completed your placement. Please acknowledge. ")
