@@ -25,6 +25,7 @@ def check_play_again():
       continue
 
 def main():
+  clear()
   show_logo(filenames)
   game_mode = get_menu_option()
   clear()
@@ -46,11 +47,11 @@ def main():
     player_two_hidden_board = create_board(board_size)
     player_one_visible_board = create_board(board_size)
     player_two_visible_board = create_board(board_size)
-    while player_one_ships != max_ships:
+    while player_one_ships < max_ships:
       player_one_ships = get_all_ships(player_one_hidden_board, board_size, player_one_ships, max_ships, player_one)
     clear()
     show_waiting_screen("Asia", "Kasia")
-    while player_two_ships != max_ships:
+    while player_two_ships < max_ships:
       player_two_ships = get_all_ships(player_two_hidden_board, board_size, player_two_ships, max_ships, player_two)
     clear()
     show_shooting_phase_message()

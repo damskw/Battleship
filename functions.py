@@ -59,6 +59,12 @@ def show_are_adjacent_error_message():
 def show_completed_placement_message():
     input("You've completed your placement. Please acknowledge. ")
 
+def show_double_ship_information():
+    print("You're going to place a double ship. Enter first, then second coordinates. ")
+
+def show_double_ship_second_coordinates_information():
+    print("Please enter second coordinates for a double ship. ")
+
 def update_screen(player_one_visible_board, player_two_visible_board, board_size):
     clear()
     display_two_boards(player_one_visible_board, player_two_visible_board, board_size)

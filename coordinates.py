@@ -1,6 +1,6 @@
 from turtle import right
 from board import display_board
-from functions import check_adjacent_spots, show_are_adjacent_error_message, show_completed_placement_message, show_coordinates_are_taken_message, show_invalid_coordinates_message
+from functions import check_adjacent_spots, show_are_adjacent_error_message, show_completed_placement_message, show_coordinates_are_taken_message, show_double_ship_information, show_double_ship_second_coordinates_information, show_invalid_coordinates_message
 from menu import clear
 from clint.textui import colored
 
@@ -37,6 +37,7 @@ def get_all_ships(player_board, board_size, player_ships, max_ships, player):
   number_of_coordinates_for_double_ships = amount_of_double_ships * 2
   amount_of_single_ships = get_amount_of_single_ships(board_size)
   single_ship_counter = 0
+  show_double_ship_information()
   place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships, amount_of_double_ships)
   player_ships += amount_of_double_ships
   while single_ship_counter != amount_of_single_ships:
@@ -80,6 +81,7 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
     if step_counter == 1:
       clear()
       display_board(player_board, board_size)
+      show_double_ship_second_coordinates_information()
       row, column = get_player_coordinates(player, board_size)
       valid_coordinates = check_long_ship_next_coordinates(used_coordinates, row, column)
       if valid_coordinates:
@@ -87,7 +89,7 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
         if not are_coordinates_taken:
           place_a_ship(player_board, row, column)
           double_ship_coordinates_counter += 1
-          step_counter += 1
+          step_counter = 0
         else: 
           show_coordinates_are_taken_message()
       else:
