@@ -26,6 +26,10 @@ def show_column_numbers(blank, board_size):
     else:
       print(str(number + 1), end = "  ")
 
+def show_player_names_above_boards(player_one, player_two):
+  print("    "+ player_one, end = "\t\t")
+  print(player_two, end = "\t")
+  print("\r")
 
 def show_rows_for_one_board(board, board_size):
     numbers_to_letters = letters_dictionary()
@@ -49,7 +53,8 @@ def show_rows_for_one_board(board, board_size):
       new_row = True
 
 
-def display_two_boards(board1, board2, board_size):
+def display_two_boards(board1, board2, board_size, player_one, player_two):
+  show_player_names_above_boards(player_one, player_two)
   show_column_numbers("   ", board_size)
   show_column_numbers("    ", board_size)
   print("\r") 

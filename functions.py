@@ -70,9 +70,9 @@ def show_double_ship_information():
 def show_double_ship_second_coordinates_information():
     print("Please enter second coordinates for a double ship. ")
 
-def update_screen(player_one_visible_board, player_two_visible_board, board_size):
+def update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two):
     clear()
-    display_two_boards(player_one_visible_board, player_two_visible_board, board_size)
+    display_two_boards(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
 
 def change_player(player):
     next_player = player
