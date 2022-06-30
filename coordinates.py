@@ -37,7 +37,6 @@ def get_all_ships(player_board, board_size, player_ships, max_ships, player):
   number_of_coordinates_for_double_ships = amount_of_double_ships * 2
   amount_of_single_ships = get_amount_of_single_ships(board_size)
   single_ship_counter = 0
-  show_double_ship_information()
   place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships, amount_of_double_ships)
   player_ships += amount_of_double_ships
   while single_ship_counter != amount_of_single_ships:
@@ -68,6 +67,7 @@ def place_a_double_ship(player_board, board_size, player, number_of_coordinates_
   while double_ship_coordinates_counter != number_of_coordinates_for_double_ships:
     if step_counter == 0:
       used_coordinates = []
+      show_double_ship_information()
       row, column = get_player_coordinates(player, board_size)
       are_coordinates_taken = check_if_coordinates_are_taken(player_board, row, column)
       if not are_coordinates_taken:
