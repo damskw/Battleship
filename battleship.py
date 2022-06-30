@@ -7,6 +7,7 @@ from menu import *
 
 HUMAN_VS_HUMAN = 1
 AI_VS_HUMAN = 2
+EXIT = 3
 
 
 filenames = ["logo.txt"]

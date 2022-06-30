@@ -27,19 +27,23 @@ def goodbye():
   sys.exit()
 
 def get_menu_option():
-  available_options = ["1","2"]
+  available_options = ["1","2", "3"]
   selected_option = input("Please choose one of the following options:\n"
                     "1. Human vs Human\n"
-                    "2. AI vs Human\n")
+                    "2. AI vs Human\n"
+                    "3. Exit game\n")
+  if selected_option.lower() == "quit" or selected_option == "3":
+    goodbye()
   while selected_option not in available_options:
     clear()
     show_logo(filenames)
     selected_option = input("Please choose one of the following options:\n"
                     "1. Human vs Human\n"
-                    "2. AI vs Human\n" + 
+                    "2. AI vs Human\n"
+                    "3. Exit game\n" + 
                     colored.red("\tError: wrong input! "))
-  if selected_option.lower() == "quit":
-    goodbye()
+    if selected_option.lower() == "quit" or selected_option == "3":
+      goodbye()
   return int(selected_option)
 
 def get_board_size():
