@@ -79,8 +79,10 @@ def change_player(player):
     return next_player
 
 def get_player_name():
-  player_one = input("Enter your nickname: ")
-  player_two = input("Enter your nickname: ")
+  player_one = input("Please enter name for first player: ")
+  clear()
+  player_two = input("Please enter name for second player: ")
+  clear()
   return player_one, player_two
 
 def check_adjacent_spots(row, column, player_board, board_size):

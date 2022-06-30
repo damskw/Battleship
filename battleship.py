@@ -37,19 +37,18 @@ def main():
   hit = "hit"
   player_one_ships = 0
   player_two_ships = 0
-  current_player = "Player one"
-  player_one = "Player one"
-  player_two = "Player two"
   is_game_running = True
   if game_mode == HUMAN_VS_HUMAN:
     player_one_hidden_board = create_board(board_size)
     player_two_hidden_board = create_board(board_size)
     player_one_visible_board = create_board(board_size)
     player_two_visible_board = create_board(board_size)
+    player_one, player_two = get_player_name()
+    current_player = player_one
     while player_one_ships < max_ships:
       player_one_ships = get_all_ships(player_one_hidden_board, board_size, player_one_ships, max_ships, player_one)
     clear()
-    show_waiting_screen("Asia", "Kasia")
+    show_waiting_screen(player_one, player_two)
     while player_two_ships < max_ships:
       player_two_ships = get_all_ships(player_two_hidden_board, board_size, player_two_ships, max_ships, player_two)
     clear()
