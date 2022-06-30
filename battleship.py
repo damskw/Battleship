@@ -30,8 +30,8 @@ def main():
   game_mode = get_menu_option()
   clear()
   board_size = get_board_size()
-  max_ships = get_max_ships(board_size)
   clear()
+  max_ships = get_max_ships(board_size)
   sunk = "sunk"
   miss = "miss"
   retake = "retake"
