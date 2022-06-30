@@ -41,16 +41,16 @@ def check_if_has_ships(player_ships):
         return False
 
 def show_miss_message():
-    input(colored.red("You've missed! "))
+    input(colored.blue("You've missed! "))
 
 def show_retake_message():
     input(colored.red("You've alredy guessed that spot, try again! "))
 
 def show_sunk_message():
-    input(colored.red("It's a hit, you've sunken enemy's battleship! "))
+    input(colored.red("It's a hit and you've sunken enemy's battleship! "))
 
 def show_hit_message():
-    input(colored.red("You've hit enemy's battleship but it's still standing! "))
+    input(colored.yellow("You've hit enemy's battleship but it's still standing! "))
 
 def show_coordinates_are_taken_message():
     input(colored.red("\t Error: Coordinates are already taken. "))
