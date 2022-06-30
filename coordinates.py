@@ -1,6 +1,6 @@
 from turtle import right
 from board import display_board
-from functions import check_adjacent_spots, show_are_adjacent_error_message, show_completed_placement_message, show_coordinates_are_taken_message, show_double_ship_information, show_double_ship_second_coordinates_information, show_invalid_coordinates_message
+from functions import check_adjacent_spots, show_are_adjacent_error_message, show_completed_placement_message, show_coordinates_are_taken_message, show_double_ship_information, show_double_ship_second_coordinates_information, show_invalid_coordinates_message, show_single_ship_information
 from menu import clear
 from clint.textui import colored
 
@@ -39,27 +39,33 @@ def get_all_ships(player_board, board_size, player_ships, max_ships, player):
   single_ship_counter = 0
   place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships, amount_of_double_ships)
   player_ships += amount_of_double_ships
-  while single_ship_counter != amount_of_single_ships:
-    clear()
-    display_board(player_board, board_size)
-    row, column = get_player_coordinates(player, board_size)
-    no_adjacent = check_adjacent_spots(row, column, player_board, board_size)
-    if no_adjacent:
-      are_coordinates_taken = check_if_coordinates_are_taken(player_board, row, column)
-      if not are_coordinates_taken:
-        place_a_ship(player_board, row, column)
-        player_ships += 1
-        single_ship_counter += 1
-      else:
-        show_coordinates_are_taken_message()
-    else:
-      show_are_adjacent_error_message()
+  player_ships = place_a_single_ship(player_board, board_size, player_ships, player, amount_of_single_ships, single_ship_counter)
   display_board(player_board, board_size)
   clear()
   if player_ships >= max_ships:
     display_board(player_board, board_size)
     show_completed_placement_message()
   return player_ships
+
+def place_a_single_ship(player_board, board_size, player_ships, player, amount_of_single_ships, single_ship_counter):
+    while single_ship_counter != amount_of_single_ships:
+      clear()
+      display_board(player_board, board_size)
+      show_single_ship_information()
+      row, column = get_player_coordinates(player, board_size)
+      no_adjacent = check_adjacent_spots(row, column, player_board, board_size)
+      if no_adjacent:
+        are_coordinates_taken = check_if_coordinates_are_taken(player_board, row, column)
+        if not are_coordinates_taken:
+          place_a_ship(player_board, row, column)
+          player_ships += 1
+          single_ship_counter += 1
+        else:
+          show_coordinates_are_taken_message()
+      else:
+        show_are_adjacent_error_message()
+    
+    return player_ships
 
 def place_a_double_ship(player_board, board_size, player, number_of_coordinates_for_double_ships, amount_of_double_ships):
   double_ship_coordinates_counter = 0
