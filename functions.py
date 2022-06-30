@@ -13,14 +13,19 @@ def take_a_shot(row, column, opponent_hidden_board, opponent_visible_board, oppo
     retake = "retake"
     hit = "hit"
     no_adjacent = check_adjacent_spots(row, column, opponent_hidden_board, board_size)
+    double_ship_is_sunk = check_if_double_ship_is_sunk(row, column, opponent_visible_board, board_size)
     if opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and no_adjacent:
         opponent_visible_board[row][column] = "S"
         opponent_player_ships -= 1
         action = sunk
     elif opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and not no_adjacent:
-        opponent_visible_board[row][column] = "H"
-        opponent_player_ships -= 1
-        action = hit
+        if double_ship_is_sunk:
+            opponent_visible_board[row][column] = "S"
+            opponent_player_ships -= 1
+            action = sunk
+        else:
+            opponent_visible_board[row][column] = "H"
+            action = hit
     elif opponent_hidden_board[row][column] == "0":
         opponent_visible_board[row][column] = "M"
         action = miss
@@ -118,3 +123,44 @@ def check_adjacent_spots(row, column, player_board, board_size):
     if player_board[row - 1][column] == "X" or player_board[row + 1][column] == "X" or player_board[row][column - 1] == "X" or player_board[row][column + 1] == "X":
       return False
   return True
+
+def check_if_double_ship_is_sunk(row, column, player_board, board_size):
+  player_input = [row, column]
+  last_spot = board_size - 1
+  upper_left_corner = [0, 0]
+  upper_right_corner = [0, last_spot]
+  bottom_left_corner = [last_spot, 0]
+  bottom_right_corner = [last_spot, last_spot]
+  first_row = [0, column]
+  first_column = [row, 0]
+  last_row = [last_spot, column]
+  last_column = [row, last_spot]
+
+  if player_input == upper_left_corner:
+    if player_board[row][column + 1] == "H" or player_board[row + 1][column] == "H":
+      return True
+  elif player_input == upper_right_corner:
+    if player_board[row][column - 1] == "H" or player_board[row + 1][column] == "H":
+      return True
+  elif player_input == bottom_left_corner:
+    if player_board[row - 1][column] == "H" or player_board[row][column + 1] == "H":
+      return True
+  elif player_input == bottom_right_corner:
+    if player_board[row - 1][column] == "H" or player_board[row][column - 1] == "H":
+      return True
+  elif player_input == first_row:
+    if player_board[row][column - 1] == "H" or player_board[row][column + 1] == "H":
+      return True
+  elif player_input == first_column:
+    if player_board[row][column + 1] == "H" or player_board[row - 1][column] == "H" or player_board[row + 1][column] == "H":
+      return True
+  elif player_input == last_row:
+    if player_board[row][column - 1] == "H" or player_board[row - 1][column] == "H" or player_board[row][column + 1] == "H":
+      return True
+  elif player_input == last_column:
+    if player_board[row][column - 1] == "H" or player_board[row + 1][column] == "H" or player_board[row - 1][column] == "H":
+      return True
+  else:
+    if player_board[row - 1][column] == "H" or player_board[row + 1][column] == "H" or player_board[row][column - 1] == "H" or player_board[row][column + 1] == "H":
+      return True
+  return False
