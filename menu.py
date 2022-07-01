@@ -2,6 +2,7 @@ from os import name, system
 import os
 import sys
 from clint.textui import colored
+import pyfiglet
 
 filenames = ["logo.txt"]
 
@@ -22,16 +23,20 @@ def show_logo(filenames):
   print("\n")
 
 def goodbye():
-  goodbye = ("Goodbye!")
+  goodbye = pyfiglet.figlet_format("Goodbye!")
   print(colored.yellow(goodbye))
   sys.exit()
 
 def get_menu_option():
   available_options = ["1","2", "3"]
-  selected_option = input("Please choose one of the following options:\n"
-                    "1. Human vs Human\n"
-                    "2. AI vs Human (under development)\n"
-                    "3. Exit game\n")
+  selected_option = input("███████████████████████████████████████████████████\n"
+                          "██                                               ██\n"
+                          "██  Please choose one of the following options:  ██\n"
+                          "██  1. Human vs Human                            ██\n"
+                          "██  2. AI vs Human (under development)           ██\n"
+                          "██  3. Exit game                                 ██\n"
+                          "██                                               ██\n"
+                          "███████████████████████████████████████████████████\n")
   if selected_option.lower() == "quit" or selected_option == "3":
     goodbye()
   while selected_option not in available_options:
@@ -64,7 +69,7 @@ def show_waiting_screen(player_one, player_two):
   clear()
 
 def show_shooting_phase_message():
-  input(colored.red("\t\tTime for shooting phase!\n Please press Enter to continue. "))
+  input(colored.red("Time for shooting phase!\n Please press Enter to continue. "))
   clear()
 
 def show_winning_message(player):
