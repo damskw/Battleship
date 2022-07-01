@@ -1,3 +1,5 @@
+from clint.textui import colored
+
 def create_board(board_size):
   clean_board = []
   for size in range(board_size):
@@ -31,6 +33,10 @@ def show_player_names_above_boards(player_one, player_two):
   print(player_two, end = "\t")
   print("\r")
 
+def show_game_rounds(game_rounds):
+  print("\t"+ "Rounds left: " + colored.red(game_rounds))
+  print("\n")
+
 def show_rows_for_one_board(board, board_size):
     numbers_to_letters = letters_dictionary()
     column = 0
@@ -53,7 +59,8 @@ def show_rows_for_one_board(board, board_size):
       new_row = True
 
 
-def display_two_boards(board1, board2, board_size, player_one, player_two):
+def display_two_boards(board1, board2, board_size, player_one, player_two, game_rounds):
+  show_game_rounds(game_rounds)
   show_player_names_above_boards(player_one, player_two)
   show_column_numbers("   ", board_size)
   show_column_numbers("    ", board_size)

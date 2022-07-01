@@ -31,6 +31,8 @@ def main():
   clear()
   board_size = get_board_size()
   clear()
+  game_rounds = get_rounds()
+  clear()
   max_ships = get_max_ships(board_size)
   sunk = "sunk"
   miss = "miss"
@@ -55,57 +57,96 @@ def main():
     clear()
     show_shooting_phase_message()
     while is_game_running:
-      while current_player == player_one:
-        update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-        row, column = get_player_coordinates(player_one, board_size)
-        action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships, board_size)
-        if action == sunk:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_sunk_message()
-          still_has_ships = check_if_has_ships(player_two_ships)
-          if still_has_ships:
-            current_player = change_player(player_two)
-          else:
-            show_winning_message(current_player)
-            check_play_again()
-        elif action == hit:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_hit_message()
-          current_player = change_player(player_two)
-        elif action == miss:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_miss_message()
-          current_player = change_player(player_two)
-        elif action == retake:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_retake_message()
-          current_player = change_player(player_one)
-
-      while current_player == player_two:
-        update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-        row, column = get_player_coordinates(player_two, board_size)
-        action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships, board_size)
-        if action == sunk:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_sunk_message()
-          still_has_ships = check_if_has_ships(player_one_ships)
-          if still_has_ships:
+      while game_rounds != 0:
+        while current_player == player_one:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+          row, column = get_player_coordinates(player_one, board_size)
+          action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships, board_size)
+          if action == sunk:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            game_rounds -= 1
+            show_sunk_message()
+            still_has_ships = check_if_has_ships(player_two_ships)
+            if still_has_ships:
+              still_has_rounds = check_game_rounds(game_rounds)
+              if still_has_rounds:
+                current_player = change_player(player_two)
+                game_rounds -= 1
+              else:
+                show_draw_message()
+                check_play_again()
+            else:
+              show_winning_message(current_player)
+              check_play_again()
+          elif action == hit:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            game_rounds -= 1
+            show_hit_message()
+            still_has_rounds = check_game_rounds(game_rounds)
+            if still_has_rounds:
+              current_player = change_player(player_two)
+            else:
+              show_draw_message()
+              check_play_again()
+          elif action == miss:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            game_rounds -= 1
+            show_miss_message()
+            still_has_rounds = check_game_rounds(game_rounds)
+            if still_has_rounds:
+              current_player = change_player(player_two)
+            else:
+              show_draw_message()
+              check_play_again()
+          elif action == retake:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            show_retake_message()
             current_player = change_player(player_one)
-          else:
-            show_winning_message(current_player)
-            check_play_again()
-        elif action == hit:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_hit_message()
-          current_player = change_player(player_two)
-        elif action == miss:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_miss_message()
-          current_player = change_player(player_one)
-        elif action == retake:
-          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
-          show_retake_message()
-          current_player = change_player(player_two)
+
+        while current_player == player_two:
+          update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+          row, column = get_player_coordinates(player_two, board_size)
+          action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships, board_size)
+          if action == sunk:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            game_rounds -= 1
+            show_sunk_message()
+            still_has_ships = check_if_has_ships(player_one_ships)
+            if still_has_ships:
+              still_has_rounds = check_game_rounds(game_rounds)
+              if still_has_rounds:
+                current_player = change_player(player_two)
+                game_rounds -= 1
+              else:
+                show_draw_message()
+                check_play_again()
+            else:
+              show_winning_message(current_player)
+              check_play_again()
+          elif action == hit:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            game_rounds -= 1
+            show_hit_message()
+            still_has_rounds = check_game_rounds(game_rounds)
+            if still_has_rounds:
+              current_player = change_player(player_two)
+            else:
+              show_draw_message()
+              check_play_again()
+          elif action == miss:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            game_rounds -= 1
+            show_miss_message()
+            still_has_rounds = check_game_rounds(game_rounds)
+            if still_has_rounds:
+              current_player = change_player(player_two)
+            else:
+              show_draw_message()
+              check_play_again()
+          elif action == retake:
+            update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
+            show_retake_message()
+            current_player = change_player(player_two)
 
       
 

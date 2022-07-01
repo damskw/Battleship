@@ -75,13 +75,35 @@ def show_double_ship_second_coordinates_information():
 def show_single_ship_information():
   print("You're going to place a single ship now. ")
 
-def update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two):
+def show_draw_message():
+  print("No more rounds left, it's a draw.")
+
+def update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds):
     clear()
-    display_two_boards(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two)
+    display_two_boards(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
 
 def change_player(player):
     next_player = player
     return next_player
+
+def get_rounds():
+  try:
+    game_rounds = int(input("Please enter number of rounds (5-50): "))
+    if game_rounds >= 5 and game_rounds <= 50:
+      return game_rounds
+    else:
+      clear()
+      print(colored.red("Error! Wrong input."))
+      get_rounds()
+  except:
+    clear()
+    print(colored.red("Error! Wrong input."))
+    get_rounds()
+
+def check_game_rounds(game_rounds):
+  if game_rounds > 0:
+    return True
+  return False  
 
 def get_player_name():
   player_one = input("Please enter name for first player: ")
@@ -240,4 +262,3 @@ def give_adjacent_hit_coordinates(row, column, player_board, board_size):
     elif player_board[row][column + 1] == "H":
       return row, column + 1
 
-  
