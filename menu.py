@@ -42,10 +42,14 @@ def get_menu_option():
   while selected_option not in available_options:
     clear()
     show_logo(filenames)
-    selected_option = input("Please choose one of the following options:\n"
-                    "1. Human vs Human\n"
-                    "2. AI vs Human (under development)\n"
-                    "3. Exit game\n" + 
+    selected_option = input("███████████████████████████████████████████████████\n"
+                            "██                                               ██\n"
+                            "██  Please choose one of the following options:  ██\n"
+                            "██  1. Human vs Human                            ██\n"
+                            "██  2. AI vs Human (under development)           ██\n"
+                            "██  3. Exit game                                 ██\n"
+                            "██                                               ██\n"
+                            "███████████████████████████████████████████████████\n" + 
                     colored.red("\tError: wrong input! "))
     if selected_option.lower() == "quit" or selected_option == "3":
       goodbye()
