@@ -8,7 +8,7 @@ def create_board(board_size):
 
 
 def letters_dictionary():
-  dictionary = {0: "A", 1: "B", 2: "C", 3: "D", 4:"E", 5:"F", 6: "G", 7: "H"}
+  dictionary = {0: "A", 1: "B", 2: "C", 3: "D", 4:"E", 5:"F", 6: "G", 7: "H", 8: "I", 9: "J", 10: "K"}
   return dictionary
 
 
@@ -94,7 +94,6 @@ def show_rows_for_two_boards(board1, board2, board_size):
         else:
           print(" " + board2[row][column_board_2], end = " ")
           column_board_2 += 1
-
 
       print("\r")
       column_board_1 = 0

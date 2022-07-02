@@ -13,12 +13,12 @@ def take_a_shot(row, column, opponent_hidden_board, opponent_visible_board, oppo
     retake = "retake"
     hit = "hit"
     no_adjacent = check_adjacent_spots(row, column, opponent_hidden_board, board_size)
-    double_ship_is_sunk = check_if_double_ship_is_sunk(row, column, opponent_visible_board, board_size)
     if opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and no_adjacent:
         opponent_visible_board[row][column] = "S"
         opponent_player_ships -= 1
         action = sunk
     elif opponent_hidden_board[row][column] == "X" and opponent_visible_board[row][column] == "0" and not no_adjacent:
+        double_ship_is_sunk = check_if_double_ship_is_sunk(row, column, opponent_visible_board, board_size)
         if double_ship_is_sunk:
             opponent_visible_board[row][column] = "S"
             old_row, old_column = give_adjacent_hit_coordinates(row, column, opponent_visible_board, board_size)

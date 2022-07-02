@@ -147,6 +147,7 @@ def main():
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
             show_retake_message()
             current_player = change_player(player_two)
+            
 
       
 
