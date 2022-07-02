@@ -95,7 +95,7 @@ def get_rounds():
       clear()
       print(colored.red("Error! Wrong input."))
       get_rounds()
-  except:
+  except ValueError:
     clear()
     print(colored.red("Error! Wrong input."))
     get_rounds()
@@ -262,3 +262,6 @@ def give_adjacent_hit_coordinates(row, column, player_board, board_size):
     elif player_board[row][column + 1] == "H":
       return row, column + 1
 
+def lower_game_rounds(game_rounds):
+  game_rounds -= 1
+  return game_rounds

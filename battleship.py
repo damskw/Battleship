@@ -64,14 +64,14 @@ def main():
           action, player_two_ships, player_two_visible_board[row][column] = take_a_shot(row, column, player_two_hidden_board, player_two_visible_board, player_two_ships, board_size)
           if action == sunk:
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
-            game_rounds -= 1
+            game_rounds = lower_game_rounds(game_rounds)
             show_sunk_message()
             still_has_ships = check_if_has_ships(player_two_ships)
             if still_has_ships:
               still_has_rounds = check_game_rounds(game_rounds)
               if still_has_rounds:
                 current_player = change_player(player_two)
-                game_rounds -= 1
+                game_rounds = lower_game_rounds(game_rounds)
               else:
                 show_draw_message()
                 check_play_again()
@@ -80,7 +80,7 @@ def main():
               check_play_again()
           elif action == hit:
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
-            game_rounds -= 1
+            game_rounds = lower_game_rounds(game_rounds)
             show_hit_message()
             still_has_rounds = check_game_rounds(game_rounds)
             if still_has_rounds:
@@ -90,7 +90,7 @@ def main():
               check_play_again()
           elif action == miss:
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
-            game_rounds -= 1
+            game_rounds = lower_game_rounds(game_rounds)
             show_miss_message()
             still_has_rounds = check_game_rounds(game_rounds)
             if still_has_rounds:
@@ -109,14 +109,14 @@ def main():
           action, player_one_ships, player_one_visible_board[row][column] = take_a_shot(row, column, player_one_hidden_board, player_one_visible_board, player_one_ships, board_size)
           if action == sunk:
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
-            game_rounds -= 1
+            game_rounds = lower_game_rounds(game_rounds)
             show_sunk_message()
             still_has_ships = check_if_has_ships(player_one_ships)
             if still_has_ships:
               still_has_rounds = check_game_rounds(game_rounds)
               if still_has_rounds:
                 current_player = change_player(player_two)
-                game_rounds -= 1
+                game_rounds = lower_game_rounds(game_rounds)
               else:
                 show_draw_message()
                 check_play_again()
@@ -125,7 +125,7 @@ def main():
               check_play_again()
           elif action == hit:
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
-            game_rounds -= 1
+            game_rounds = lower_game_rounds(game_rounds)
             show_hit_message()
             still_has_rounds = check_game_rounds(game_rounds)
             if still_has_rounds:
@@ -135,7 +135,7 @@ def main():
               check_play_again()
           elif action == miss:
             update_screen(player_one_visible_board, player_two_visible_board, board_size, player_one, player_two, game_rounds)
-            game_rounds -= 1
+            game_rounds = lower_game_rounds(game_rounds)
             show_miss_message()
             still_has_rounds = check_game_rounds(game_rounds)
             if still_has_rounds:
