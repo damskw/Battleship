@@ -115,7 +115,7 @@ def main():
             if still_has_ships:
               still_has_rounds = check_game_rounds(game_rounds)
               if still_has_rounds:
-                current_player = change_player(player_two)
+                current_player = change_player(player_one)
                 game_rounds = lower_game_rounds(game_rounds)
               else:
                 show_draw_message()
@@ -129,7 +129,7 @@ def main():
             show_hit_message()
             still_has_rounds = check_game_rounds(game_rounds)
             if still_has_rounds:
-              current_player = change_player(player_two)
+              current_player = change_player(player_one)
             else:
               show_draw_message()
               check_play_again()
@@ -139,7 +139,7 @@ def main():
             show_miss_message()
             still_has_rounds = check_game_rounds(game_rounds)
             if still_has_rounds:
-              current_player = change_player(player_two)
+              current_player = change_player(player_one)
             else:
               show_draw_message()
               check_play_again()
